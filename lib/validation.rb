@@ -1,17 +1,5 @@
 class Validation
 
-
-
-  def initialize
-    @grid = {"A1" => nil, "A2" => nil, "A3" => nil, "A4" => nil,
-            "B1" => nil, "B2" => nil, "B3" => nil, "B4" => nil,
-            "C1" => nil, "C2" => nil, "C3" => nil, "C4" => nil,
-            "D1" => nil, "D2" => nil, "D3" => nil, "D4" => nil}
-    @rows = ["A", "B", "C", "D"]
-    @columns = [1, 2, 3, 4]
-    @ships = []
-  end
-
   def upcase_coordinates(coordinates)
     coordinates.upcase
   end
@@ -44,14 +32,14 @@ class Validation
     end
   end
 
-  def detect_horizontal_wrap(split_coordinates)
+  def detect_horizontal_wrap(split_coordinates,columns)
     numbers = get_numbers(split_coordinates)
-    numbers.include?("1") && numbers.include?(@columns.length.to_s)
+    numbers.include?("1") && numbers.include?(columns.length.to_s)
   end
 
-  def detect_vertical_wrap(split_coordinates)
+  def detect_vertical_wrap(split_coordinates, rows)
     letters = get_letters(split_coordinates)
-    letters.include?("A") && letters.include?(@rows.last)
+    letters.include?("A") && letters.include?(rows.last)
   end
 
   def detect_valid_coordinates_length(split_coordinates, ship_length)

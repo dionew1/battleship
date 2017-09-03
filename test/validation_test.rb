@@ -99,47 +99,47 @@ class ValidationTest < Minitest::Test
 
   def test_detect_horizontal_wrap_with_2_coordinates
     validation = Validation.new
-    actual = validation.detect_horizontal_wrap(["A1", "A4"])
+    actual = validation.detect_horizontal_wrap(["A1", "A4"], [1, 2, 3, 4])
 
     assert actual
   end
 
   def test_detect_horizontal_wrap_with_3_coordinates
     validation = Validation.new
-    actual = validation.detect_horizontal_wrap(["A2", "A1", "A4"])
+    actual = validation.detect_horizontal_wrap(["A2", "A1", "A4"], [1, 2, 3, 4])
 
     assert actual
   end
 
   def test_detect_vertical_wrap_with_2_coordinates
     validation = Validation.new
-    actual = validation.detect_vertical_wrap(["A1", "D1"])
+    actual = validation.detect_vertical_wrap(["A1", "D1"], ["A", "B", "C", "D"])
 
     assert actual
   end
 
   def test_detect_vertical_wrap_with_3_coordinates
     validation = Validation.new
-    actual = validation.detect_vertical_wrap(["A1", "C1", "D1"])
+    actual = validation.detect_vertical_wrap(["A1", "C1", "D1"], ["A", "B", "C", "D"])
 
     assert actual
   end
 
-  def test_valid_length_of_coordinates_with_2_coordinates
+  def test_detect_valid_length_of_coordinates_with_2_coordinates
     validation = Validation.new
     actual = validation.detect_valid_coordinates_length(["A1", "A2"], 2)
 
     assert actual
   end
 
-  def test_valid_length_of_coordinates_with_3_coordinates
+  def test_detect_valid_length_of_coordinates_with_3_coordinates
     validation = Validation.new
     actual = validation.detect_valid_coordinates_length(["A1", "A2", "A3"], 3)
 
     assert actual
   end
 
-  def test_valid_length_of_coordinates_with_2_coordinates_and_invalid_length
+  def test_detect_valid_length_of_coordinates_with_2_coordinates_and_invalid_length
     validation = Validation.new
     actual = validation.detect_valid_coordinates_length(["A1", "A2", "A3", "A4"], 2)
 

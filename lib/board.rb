@@ -46,7 +46,12 @@ attr_reader :grid, :rows, :columns, :ships
 
   def detect_horizontal_wrap(split_coordinates)
     numbers = get_numbers(split_coordinates)
-    numbers.include?("1") && numbers.include?("4")  
+    numbers.include?("1") && numbers.include?(@columns.length.to_s)
+  end
+
+  def detect_vertical_wrap(split_coordinates)
+    letters = get_letters(split_coordinates)
+    letters.include?("A") && letters.include?(@rows.last)
   end
 
 end

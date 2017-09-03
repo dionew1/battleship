@@ -104,5 +104,18 @@ class BoardTest < Minitest::Test
     assert actual
   end
 
+  def test_detect_horizontal_wrap_with_3_coordinates
+    board = Board.new
+    actual = board.detect_horizontal_wrap(["A2", "A1", "A4"])
+
+    assert actual
+  end
+
+  def test_detect_vertical_wrap_with_2_coordinates
+    board = Board.new
+    actual = board.detect_vertical_wrap(["A1", "D1"])
+
+    assert actual
+  end
 
 end

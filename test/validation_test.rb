@@ -104,11 +104,25 @@ class ValidationTest < Minitest::Test
     assert actual
   end
 
+  def test_detect_horizontal_wrap_with_2_valid_coordinates
+    validation = Validation.new
+    actual = validation.detect_horizontal_wrap(["A1", "A2"], [1, 2, 3, 4])
+
+    refute actual
+  end
+
   def test_detect_horizontal_wrap_with_3_coordinates
     validation = Validation.new
     actual = validation.detect_horizontal_wrap(["A2", "A1", "A4"], [1, 2, 3, 4])
 
     assert actual
+  end
+
+  def test_detect_horizontal_wrap_with_3_valid_coordinates
+    validation = Validation.new
+    actual = validation.detect_horizontal_wrap(["A2", "A1", "A3"], [1, 2, 3, 4])
+
+    refute actual
   end
 
   def test_detect_vertical_wrap_with_2_coordinates
@@ -118,11 +132,25 @@ class ValidationTest < Minitest::Test
     assert actual
   end
 
+  def test_detect_vertical_wrap_with_2_valid_coordinates
+    validation = Validation.new
+    actual = validation.detect_vertical_wrap(["A1", "B1"], ["A", "B", "C", "D"])
+
+    refute actual
+  end
+
   def test_detect_vertical_wrap_with_3_coordinates
     validation = Validation.new
     actual = validation.detect_vertical_wrap(["A1", "C1", "D1"], ["A", "B", "C", "D"])
 
     assert actual
+  end
+
+  def test_detect_vertical_wrap_with_3_valid_coordinates
+    validation = Validation.new
+    actual = validation.detect_vertical_wrap(["A1", "C1", "B1"], ["A", "B", "C", "D"])
+
+    refute actual
   end
 
   def test_detect_valid_length_of_coordinates_with_2_coordinates
@@ -142,6 +170,20 @@ class ValidationTest < Minitest::Test
   def test_detect_valid_length_of_coordinates_with_2_coordinates_and_invalid_length
     validation = Validation.new
     actual = validation.detect_valid_coordinates_length(["A1", "A2", "A3", "A4"], 2)
+
+    refute actual
+  end
+
+  def test_detect_horizontal_split_with_2_coordinates
+    validation = Validation.new
+    actual = validation.detect_horizontal_split(["A1", "A3"])
+
+    assert actual
+  end
+
+  def test_detect_horizontal_split_with_2_valid_coordinates
+    validation = Validation.new
+    actual = validation.detect_horizontal_split(["A1", "A2"])
 
     refute actual
   end

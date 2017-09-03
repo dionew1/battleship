@@ -46,4 +46,14 @@ class Validation
     split_coordinates.length == ship_length
   end
 
+  def detect_horizontal_split(split_coordinates)
+    sorted = split_coordinates.sort
+    numbers = get_numbers(sorted)
+    integers = numbers.map do |number|
+      number.to_i
+    end
+    comparison = [*(integers[0]..integers[-1])]
+    comparison != integers
+  end
+
 end

@@ -51,13 +51,58 @@ class BoardTest < Minitest::Test
     assert_equal expected, actual
   end
 
-  def test_detect_direction
-    skip
+  def test_detect_direction_horizontal_with_2_coordinates
     board = Board.new
-    expected = "horizontal"
     actual = board.detect_direction(["A1", "A2"])
+    expected = "horizontal"
 
     assert_equal expected, actual
   end
+
+  def test_detect_direction_vertical_with_2_coordinates
+    board = Board.new
+    actual = board.detect_direction(["A1", "B1"])
+    expected = "vertical"
+
+    assert_equal expected, actual
+  end
+
+  def test_detect_direction_nil_with_2_coordinates
+    board = Board.new
+    actual = board.detect_direction(["A1", "B2"])
+
+    assert_nil actual
+  end
+
+  def test_detect_direction_horizontal_with_3_coordinates
+    board = Board.new
+    actual = board.detect_direction(["A1", "A2", "A3"])
+    expected = "horizontal"
+
+    assert_equal expected, actual
+  end
+
+  def test_detect_direction_vertical_with_3_coordinates
+    board = Board.new
+    actual = board.detect_direction(["A1", "B1", "C1"])
+    expected = "vertical"
+
+    assert_equal expected, actual
+  end
+
+  def test_detect_direction_nil_with_3_coordinates
+    board = Board.new
+    actual = board.detect_direction(["A1", "B2", "C2"])
+
+    assert_nil actual
+  end
+
+  def test_detect_horizontal_wrap_with_2_coordinates
+    board = Board.new
+    actual = board.detect_horizontal_wrap(["A1", "A4"])
+
+    assert actual
+  end
+
 
 end

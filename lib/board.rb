@@ -32,9 +32,21 @@ attr_reader :grid, :rows, :columns, :ships
     end
   end
 
-  def detect_direction
+  def detect_direction(split_coordinates)
+    letters = get_letters(split_coordinates)
+    numbers = get_numbers(split_coordinates)
+    if letters.uniq.length == 1
+      "horizontal"
+    elsif numbers.uniq.length == 1
+      "vertical"
+    else
+      nil
+    end
+  end
 
-
+  def detect_horizontal_wrap(split_coordinates)
+    numbers = get_numbers(split_coordinates)
+    numbers.include?("1") && numbers.include?("4")  
   end
 
 end

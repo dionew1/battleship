@@ -188,5 +188,25 @@ class ValidationTest < Minitest::Test
     refute actual
   end
 
+  def test_detect_horizontal_split_with_3_coordinates
+    validation = Validation.new
+    actual = validation.detect_horizontal_split(["A1", "A3", "A4"])
+
+    assert actual
+  end
+
+  def test_detect_horizontal_split_with_3_valid_coordinates
+    validation = Validation.new
+    actual = validation.detect_horizontal_split(["A1", "A3", "A2"])
+
+    refute actual
+  end
+
+  def test_detect_vertical_split_with_2_coordinates
+    validation = Validation.new
+    actual = validation.detect_vertical_split(["A1", "C1"], ["A", "B", "C", "D"])
+
+    assert actual
+  end
 
 end

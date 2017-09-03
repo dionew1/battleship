@@ -56,4 +56,14 @@ class Validation
     comparison != integers
   end
 
+  def detect_vertical_split(split_coordinates, rows)
+    sorted = split_coordinates.sort
+    letters = get_letters(sorted)
+    indexes = letters.map do |letter|
+      rows.index(letter)
+    end
+    comparison = [*(indexes[0]..indexes[-1])]
+    comparison != indexes
+  end
+
 end

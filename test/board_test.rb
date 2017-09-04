@@ -40,10 +40,21 @@ class BoardTest < Minitest::Test
     board = Board.new
     actual = board.choose_random_ship_direction
 
-    assert_instance_of String, actual
+    assert ["horizontal", "vertical"].include?(actual)
   end
 
+  def test_choose_horizontal_starting_coordinate_with_ship_length_of_2
+    board = Board.new
+    actual = board.choose_horizontal_starting_coordinate(2)
 
-  
+    assert board.grid.has_key?(actual)
+  end
+
+  def test_choose_horizontal_starting_coordinate_with_ship_length_of_3
+    board = Board.new
+    actual = board.choose_horizontal_starting_coordinate(3)
+
+    assert board.grid.has_key?(actual)
+  end
 
 end

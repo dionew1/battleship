@@ -25,4 +25,15 @@ attr_reader :grid, :rows, :columns, :ships
     ["horizontal", "vertical"][rand(2)]
   end
 
+
+  def choose_horizontal_starting_coordinate(ship_length)
+    columns_to_keep = @columns.length - (ship_length - 1)
+    numbers = @columns.take(columns_to_keep)
+    number = numbers[rand(numbers.length)]
+    letter = @rows[rand(@rows.length)]
+    letter + number.to_s
+  end
+
+
+
 end

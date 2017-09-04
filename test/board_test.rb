@@ -3,6 +3,7 @@ require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/board'
 require './lib/validation'
+require './lib/ship'
 
 class BoardTest < Minitest::Test
 
@@ -85,9 +86,39 @@ class BoardTest < Minitest::Test
     assert_equal "B1", actual
   end
 
+  def test_validate_computer_coordinates_with_2_valid
+    board = Board.new
+    actual = board.validate_computer_coordinates("A1 A2")
 
-  def test_validate_coordinates
-    
+    refute actual
+  end
+
+  def test_validate_computer_coordinates_with_3_valid
+    board = Board.new
+    actual = board.validate_computer_coordinates("B1 B2 B3")
+
+    refute actual
+  end
+  def test_validate_computer_coordinates_with_2_split
+    board = Board.new
+    actual = board.validate_computer_coordinates("A1 A4")
+
+    assert actual
+  end
+
+  def test_validate_computer_coordinates_with_3_invalid
+    board = Board.new
+    actual = board.validate_computer_coordinates("A1 A2 Z3")
+
+    assert actual
+  end
+
+  def test_validate_computer_coordinates_with_3_overlap
+    board = Board.new
+    board.ships << Ship.new(["A1", "A2"], "horizontal")
+    actual = board.validate_computer_coordinates("A1 B2 C3")
+
+    assert actual
   end
 
 end

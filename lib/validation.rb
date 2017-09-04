@@ -34,8 +34,8 @@ class Validation
     letters.include?("A") && letters.include?(rows.last)
   end
 
-  def detect_valid_coordinates_length(split_coordinates, ship_length)
-    split_coordinates.length == ship_length
+  def detect_invalid_coordinates_length(split_coordinates, ship_length)
+    split_coordinates.length != ship_length
   end
 
   def detect_horizontal_split(split_coordinates)
@@ -54,6 +54,7 @@ class Validation
     indexes = letters.map do |letter|
       rows.index(letter)
     end
+    indexes.compact!
     comparison = [*(indexes[0]..indexes[-1])]
     comparison != indexes
   end

@@ -130,25 +130,25 @@ class ValidationTest < Minitest::Test
     refute actual
   end
 
-  def test_detect_valid_length_of_coordinates_with_2_coordinates
+  def test_detect_invalid_length_of_coordinates_with_2_coordinates
     validation = Validation.new
-    actual = validation.detect_valid_coordinates_length(["A1", "A2"], 2)
-
-    assert actual
-  end
-
-  def test_detect_valid_length_of_coordinates_with_3_coordinates
-    validation = Validation.new
-    actual = validation.detect_valid_coordinates_length(["A1", "A2", "A3"], 3)
-
-    assert actual
-  end
-
-  def test_detect_valid_length_of_coordinates_with_2_coordinates_and_invalid_length
-    validation = Validation.new
-    actual = validation.detect_valid_coordinates_length(["A1", "A2", "A3", "A4"], 2)
+    actual = validation.detect_invalid_coordinates_length(["A1", "A2"], 2)
 
     refute actual
+  end
+
+  def test_detect_invalid_length_of_coordinates_with_3_coordinates
+    validation = Validation.new
+    actual = validation.detect_invalid_coordinates_length(["A1", "A2", "A3"], 3)
+
+    refute actual
+  end
+
+  def test_detect_invalid_length_of_coordinates_with_2_coordinates_and_invalid_length
+    validation = Validation.new
+    actual = validation.detect_invalid_coordinates_length(["A1", "A2", "A3", "A4"], 2)
+
+    assert actual
   end
 
   def test_detect_horizontal_split_with_2_coordinates

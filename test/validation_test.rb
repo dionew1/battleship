@@ -12,30 +12,6 @@ class ValidationTest < Minitest::Test
     assert_instance_of Validation, validation
   end
 
-  def test_upcase_coordinates
-    validation = Validation.new
-    actual = validation.upcase_coordinates("a1 a2")
-    expected = "A1 A2"
-
-    assert_equal expected, actual
-  end
-
-  def test_split_player_coordinates_into_characters
-    validation = Validation.new
-    actual = validation.split_coordinates("A1 A2")
-    expected = ["A1", "A2"]
-
-    assert_equal expected, actual
-  end
-
-  def upcase_coordinates
-    validation = Validation.new
-    actual = validation.split_coordinates(validation.upcase_coordinates("a1 a2"))
-    expected = "A1 A2"
-
-    assert_equal expected, actual
-  end
-
   def test_get_letters
     validation = Validation.new
     actual = validation.get_letters(["A1", "A2"])
@@ -275,5 +251,18 @@ class ValidationTest < Minitest::Test
     refute actual
   end
 
+  def test_detect_duplicate_coordinate
+    validation = Validation.new
+    actual = validation.detect_duplicate_coordinate(["A1", "A1"])
+
+    assert actual
+  end
+
+  def test_detect_duplicate_coordinate_valid_coordinates
+    validation = Validation.new
+    actual = validation.detect_duplicate_coordinate(["A1", "A2"])
+
+    refute actual
+  end
 
 end

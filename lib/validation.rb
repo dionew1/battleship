@@ -1,13 +1,5 @@
 class Validation
 
-  def upcase_coordinates(coordinates)
-    coordinates.upcase
-  end
-
-  def split_coordinates(coordinates)
-    coordinates.split
-  end
-
   def get_letters(split_coordinates)
     split_coordinates.map do |coordinate|
       coordinate[0]
@@ -90,5 +82,8 @@ class Validation
     overlap.flatten.include?(true)
   end
 
+  def detect_duplicate_coordinate(split_coordinates)
+    split_coordinates.uniq != split_coordinates
+  end
 
 end

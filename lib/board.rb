@@ -10,7 +10,15 @@ attr_reader :grid, :rows, :columns, :ships
     @rows = ["A", "B", "C", "D"]
     @columns = [1, 2, 3, 4]
     @ships = []
-    @validation = Validation.new(@rows, @columns)
+    @validation = Validation.new
+  end
+
+  def upcase_coordinates(coordinates)
+    coordinates.upcase
+  end
+
+  def split_coordinates(coordinates)
+    coordinates.split
   end
 
 end

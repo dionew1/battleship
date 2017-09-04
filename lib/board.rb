@@ -95,10 +95,17 @@ attr_accessor :ships
 
   def create_computer_coordinates(ship_length)
     direction = choose_random_ship_direction
+    coordinates = ""
     if "horizontal" == direction
-      create_horizontal_computer_coordinates(ship_length)
+      coordinates = create_horizontal_computer_coordinates(ship_length)
     else
-      create_vertical_computer_coordinates(ship_length)
+      coordinates = create_vertical_computer_coordinates(ship_length)
+    end
+
+    if validate_computer_coordinates(coordinates)
+      create_computer_coordinates(ship_length)
+    else
+      coordinates
     end
   end
 

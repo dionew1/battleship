@@ -130,6 +130,7 @@ class BoardTest < Minitest::Test
 
   def test_create_computer_coordinates
     board = Board.new
+    board.ships << Ship.new(["A1", "A2"], "horizontal")
     actual = board.create_computer_coordinates(3)
 
     assert_equal 8, actual.length

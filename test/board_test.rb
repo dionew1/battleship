@@ -121,4 +121,18 @@ class BoardTest < Minitest::Test
     assert actual
   end
 
+  def test_create_computer_coordinates
+    board = Board.new
+    actual = board.create_computer_coordinates(2)
+
+    assert_equal 5, actual.length
+  end
+
+  def test_create_computer_coordinates
+    board = Board.new
+    actual = board.create_computer_coordinates(3)
+
+    assert_equal 8, actual.length
+  end
+
 end

@@ -41,4 +41,14 @@ attr_reader :grid, :rows, :columns, :ships
     letter + number.to_s
   end
 
+  def get_next_horizontal_coordinate(starting_coordinate)
+    next_coordinate_number = starting_coordinate[1].to_i + 1
+    starting_coordinate[0] + next_coordinate_number.to_s
+  end
+
+  def get_next_vertical_coordinate(starting_coordinate)
+    next_coordinate_letter = @rows[@rows.index(starting_coordinate[0]) + 1]
+    next_coordinate_letter + starting_coordinate[1]
+  end
+
 end

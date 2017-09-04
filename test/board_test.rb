@@ -71,4 +71,18 @@ class BoardTest < Minitest::Test
     assert board.grid.has_key?(actual)
   end
 
+  def test_get_next_horizontal_coordinate
+    board = Board.new
+    actual = board.get_next_horizontal_coordinate("A1")
+
+    assert_equal "A2", actual
+  end
+
+  def test_get_next_vertical_coordinate
+    board = Board.new
+    actual = board.get_next_vertical_coordinate("A1")
+
+    assert_equal "B1", actual
+  end
+
 end

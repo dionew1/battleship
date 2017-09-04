@@ -2,6 +2,7 @@ require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/validation'
+require './lib/ship'
 
 class ValidationTest < Minitest::Test
 
@@ -258,5 +259,21 @@ class ValidationTest < Minitest::Test
 
     assert_nil actual
   end
+
+  def test_detect_overlap_with_one_ship
+    validation = Validation.new
+    ship = Ship.new(["A1", "A2"])
+    actual = validation.detect_overlap(["A1", "B1"], [ship])
+
+    assert actual
+  end
+
+  def test_detect_overlap_with_no_ship
+    validation = Validation.new
+    actual = validation.detect_overlap(["A1", "B1"], [])
+
+    refute actual
+  end
+
 
 end

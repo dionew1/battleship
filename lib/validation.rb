@@ -83,5 +83,12 @@ class Validation
       valid_letters.find {|value| value == false}
   end
 
+  def detect_overlap(split_coordinates, ships)
+    overlap = split_coordinates.map do |coordinate|
+      ships.map {|ship| ship.location.include?(coordinate)}
+    end
+    overlap.flatten.include?(true)
+  end
+
 
 end

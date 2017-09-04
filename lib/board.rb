@@ -93,7 +93,7 @@ attr_accessor :ships
     coordinates.join(" ")
   end
 
-  def create_computer_coordinates(ship_length)
+  def create_coordinates_on_direction(ship_length)
     direction = choose_random_ship_direction
     coordinates = ""
     if "horizontal" == direction
@@ -101,12 +101,15 @@ attr_accessor :ships
     else
       coordinates = create_vertical_computer_coordinates(ship_length)
     end
+    coordinates
+  end
 
+  def create_computer_coordinates(ship_length)
+    coordinates = create_coordinates_on_direction(ship_length)
     if validate_computer_coordinates(coordinates)
-      create_computer_coordinates(ship_length)
-    else
-      coordinates
+      coordinates = create_computer_coordinates(ship_length)
     end
+    coordinates
   end
 
 end

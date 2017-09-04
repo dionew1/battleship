@@ -71,23 +71,35 @@ attr_accessor :ships
     results.any?
   end
 
-  def create_computer_coordinates(ship_length)
-    direction = choose_random_ship_direction
+  def create_horizontal_computer_coordinates(ship_length)
     coordinates = []
-    if "horizontal" == direction
-      coordinates << coordinate_1 = choose_horizontal_starting_coordinate(ship_length)
-      (ship_length - 1).times do
-        coordinates << next_coordinate = get_next_horizontal_coordinate(coordinate_1)
-        coordinate_1 = next_coordinate
-      end
-    else
-      coordinates << coordinate_1 = choose_vertical_starting_coordinate(ship_length)
-      (ship_length - 1).times do
-        coordinates << next_coordinate = get_next_vertical_coordinate(coordinate_1)
-        coordinate_1 = next_coordinate
-      end
+    coordinate_1 = choose_horizontal_starting_coordinate(ship_length)
+    coordinates << coordinate_1
+    (ship_length - 1).times do
+      coordinates << next_coordinate = get_next_horizontal_coordinate(coordinate_1)
+      coordinate_1 = next_coordinate
     end
     coordinates.join(" ")
+  end
+
+  def create_vertical_computer_coordinates(ship_length)
+    coordinates = []
+    coordinate_1 = choose_vertical_starting_coordinate(ship_length)
+    coordinates << coordinate_1
+    (ship_length - 1).times do
+      coordinates << next_coordinate = get_next_vertical_coordinate(coordinate_1)
+      coordinate_1 = next_coordinate
+    end
+    coordinates.join(" ")
+  end
+
+  def create_computer_coordinates(ship_length)
+    direction = choose_random_ship_direction
+    if "horizontal" == direction
+      create_horizontal_computer_coordinates(ship_length)
+    else
+      create_vertical_computer_coordinates(ship_length)
+    end
   end
 
 end

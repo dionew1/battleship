@@ -136,4 +136,34 @@ class BoardTest < Minitest::Test
     assert_equal 8, actual.length
   end
 
+
+  def test_create_vertical_computer_coordinates
+    board = Board.new
+    actual = board.create_vertical_computer_coordinates(2)
+
+    assert_equal 5, actual.length
+  end
+
+  def test_create_horizontal_computer_coordinates
+    board = Board.new
+    actual = board.create_horizontal_computer_coordinates(2)
+
+    assert_equal 5, actual.length
+  end
+
+  def test_create_coordinates_on_direction
+    board = Board.new
+    actual = board.create_coordinates_on_direction(2)
+
+    assert_equal 5, actual.length
+  end
+
+  def test_create_ship
+    board = Board.new
+    board.create_computer_ship_one
+
+    assert_equal 1, board.ships.length
+  end
+
+
 end

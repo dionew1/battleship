@@ -5,9 +5,9 @@ attr_accessor :ships
 
   def initialize
     @grid = {"A1" => nil, "A2" => nil, "A3" => nil, "A4" => nil,
-            "B1" => nil, "B2" => nil, "B3" => nil, "B4" => nil,
-            "C1" => nil, "C2" => nil, "C3" => nil, "C4" => nil,
-            "D1" => nil, "D2" => nil, "D3" => nil, "D4" => nil}
+             "B1" => nil, "B2" => nil, "B3" => nil, "B4" => nil,
+             "C1" => nil, "C2" => nil, "C3" => nil, "C4" => nil,
+             "D1" => nil, "D2" => nil, "D3" => nil, "D4" => nil}
     @rows = ["A", "B", "C", "D"]
     @columns = [1, 2, 3, 4]
     @ships = []
@@ -111,5 +111,13 @@ attr_accessor :ships
     end
     coordinates
   end
+
+  def create_computer_ship_one
+    ship_coordinates = create_computer_coordinates(2)
+    split_ship_coordinates = split_coordinates(ship_coordinates)
+    direction = @validation.detect_direction(split_ship_coordinates)
+    @ships << Ship.new(split_ship_coordinates, direction)
+  end
+
 
 end

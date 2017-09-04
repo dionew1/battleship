@@ -36,4 +36,14 @@ class BoardTest < Minitest::Test
     assert_equal expected, actual
   end
 
+  def test_choose_random_ship_direction
+    board = Board.new
+    actual = board.choose_random_ship_direction
+
+    assert_instance_of String, actual
+  end
+
+
+  
+
 end

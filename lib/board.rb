@@ -21,4 +21,8 @@ attr_reader :grid, :rows, :columns, :ships
     coordinates.split
   end
 
+  def choose_random_ship_direction
+    ["horizontal", "vertical"][rand(2)]
+  end
+
 end

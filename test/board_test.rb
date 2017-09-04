@@ -57,4 +57,18 @@ class BoardTest < Minitest::Test
     assert board.grid.has_key?(actual)
   end
 
+  def test_choose_vertical_starting_coordinate_with_ship_length_of_2
+    board = Board.new
+    actual = board.choose_vertical_starting_coordinate(2)
+
+    assert board.grid.has_key?(actual)
+  end
+
+  def test_choose_vertical_starting_coordinate_with_ship_length_of_3
+    board = Board.new
+    actual = board.choose_vertical_starting_coordinate(3)
+
+    assert board.grid.has_key?(actual)
+  end
+
 end

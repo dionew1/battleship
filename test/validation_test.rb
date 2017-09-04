@@ -238,7 +238,7 @@ class ValidationTest < Minitest::Test
 
   def test_detect_overlap_with_one_ship
     validation = Validation.new
-    ship = Ship.new(["A1", "A2"])
+    ship = Ship.new(["A1", "A2"], "horizontal")
     actual = validation.detect_overlap(["A1", "B1"], [ship])
 
     assert actual

@@ -85,4 +85,9 @@ class BoardTest < Minitest::Test
     assert_equal "B1", actual
   end
 
+
+  def test_validate_coordinates
+    
+  end
+
 end

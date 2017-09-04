@@ -51,4 +51,17 @@ attr_reader :grid, :rows, :columns, :ships
     next_coordinate_letter + starting_coordinate[1]
   end
 
+  def validate_coordinates(split_coordinates)
+    @validation.detect_direction(split_coordinates)
+    @validation.detect_horizontal_wrap(split_coordinates,@columns)
+    @validation.detect_vertical_wrap(split_coordinates, @rows)
+    @validation.detect_valid_coordinates_length(split_coordinates, split_coordinates.length)
+    @validation.detect_horizontal_split(split_coordinates)
+    @validation.detect_vertical_split(split_coordinates, @rows)
+    @validation.detect_number_exists_on_board(split_coordinates, @columns)
+    @validation.detect_letter_exists_on_board(split_coordinates, @rows)
+    @validation.detect_overlap(split_coordinates, @ships)
+    @validation.detect_duplicate_coordinate(split_coordinates)
+  end
+
 end

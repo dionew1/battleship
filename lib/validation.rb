@@ -66,4 +66,22 @@ class Validation
     comparison != indexes
   end
 
+  def detect_number_exists_on_board(split_coordinates, columns)
+    numbers = get_numbers(split_coordinates)
+    valid_numbers = numbers.map do |number|
+      columns.include?(number.to_i)
+    end
+      valid_numbers.find {|value| value == false}
+  end
+
+
+  def detect_letter_exists_on_board(split_coordinates, rows)
+    letters = get_letters(split_coordinates)
+    valid_letters = letters.map do |letter|
+      rows.include?(letter)
+    end
+      valid_letters.find {|value| value == false}
+  end
+
+
 end

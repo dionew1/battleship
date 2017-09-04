@@ -209,4 +209,54 @@ class ValidationTest < Minitest::Test
     assert actual
   end
 
+  def test_detect_vertical_split_with_2_valid_coordinates
+    validation = Validation.new
+    actual = validation.detect_vertical_split(["A1", "B1"], ["A", "B", "C", "D"])
+
+    refute actual
+  end
+
+  def test_detect_vertical_split_with_3_coordinates
+    validation = Validation.new
+    actual = validation.detect_vertical_split(["A1", "C1", "D1"], ["A", "B", "C", "D"])
+
+    assert actual
+  end
+
+
+  def test_detect_vertical_split_with_3_valid_coordinates
+    validation = Validation.new
+    actual = validation.detect_vertical_split(["A1", "C1", "B1"], ["A", "B", "C", "D"])
+
+    refute actual
+  end
+
+  def test_detect_number_exists
+    validation = Validation.new
+    actual = validation.detect_number_exists_on_board(["A1", "A6"], [1, 2, 3, 4] )
+
+    refute actual
+  end
+
+  def test_detect_number_exists_with_valid_coordinates
+    validation = Validation.new
+    actual = validation.detect_number_exists_on_board(["A1", "A2"], [1, 2, 3, 4] )
+
+    assert_nil actual
+  end
+
+  def test_detect_letter_exists
+    validation = Validation.new
+    actual = validation.detect_letter_exists_on_board(["A1", "E4"], ["A", "B", "C", "D"])
+
+    refute actual
+  end
+
+  def test_detect_letter_exists_with_valid_coordinates
+    validation = Validation.new
+    actual = validation.detect_letter_exists_on_board(["A1", "A2"], ["A", "B", "C", "D"] )
+
+    assert_nil actual
+  end
+
 end

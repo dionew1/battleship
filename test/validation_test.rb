@@ -171,7 +171,7 @@ class ValidationTest < Minitest::Test
     validation = Validation.new
     actual = validation.detect_invalid_coordinates_length_with_error(["A1", "A2", "A3", "A4"], 2)
 
-    assert_equal "Invalid Coordinates", actual
+    assert_equal "Invalid coordinates. Too many coordinates have been entered.", actual
   end
 
   def test_detect_horizontal_split_with_2_coordinates
@@ -263,7 +263,7 @@ class ValidationTest < Minitest::Test
     validation = Validation.new
     actual = validation.detect_number_does_not_exist_on_board_with_error(["A1", "A6"], [1, 2, 3, 4] )
 
-    assert_equal "Invalid Coordinates", actual
+    assert_equal "Invalid coordinates. Number entered does not exist on board.", actual
   end
 
   def test_detect_letter_does_not_exist_on_board
@@ -284,7 +284,7 @@ class ValidationTest < Minitest::Test
     validation = Validation.new
     actual = validation.detect_letter_does_not_exist_on_board_with_error(["A1", "E4"], ["A", "B", "C", "D"])
 
-    assert_equal "Invalid Coordinates", actual
+    assert_equal "Invalid coordinates. Letter entered does not exist on board.", actual
   end
 
   def test_detect_overlap_with_one_ship
@@ -328,7 +328,7 @@ class ValidationTest < Minitest::Test
     validation = Validation.new
     actual = validation.detect_duplicate_coordinate_with_error(["A1", "A1"])
 
-    assert_equal "Invalid Coordinates", actual
+    assert_equal "Invalid coordinates due to duplication.", actual
   end
 
 end

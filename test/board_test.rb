@@ -266,5 +266,7 @@ class BoardTest < Minitest::Test
     assert_equal "Two ships cannot reside in the same coordinate.", actual
   end
 
+  
+
 
 end

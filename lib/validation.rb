@@ -52,7 +52,7 @@ class Validation
 
   def detect_invalid_coordinates_length_with_error(split_coordinates, ship_length)
     if detect_invalid_coordinates_length(split_coordinates, ship_length)
-      "Invalid Coordinates"
+      "Invalid coordinates. Too many coordinates have been entered."
     end
   end
 
@@ -99,7 +99,7 @@ class Validation
 
   def detect_number_does_not_exist_on_board_with_error(split_coordinates, columns)
     if detect_number_does_not_exist_on_board(split_coordinates, columns)
-      "Invalid Coordinates"
+      "Invalid coordinates. Number entered does not exist on board."
     end
   end
 
@@ -113,7 +113,7 @@ class Validation
 
   def detect_letter_does_not_exist_on_board_with_error(split_coordinates, rows)
     if detect_letter_does_not_exist_on_board(split_coordinates, rows)
-      "Invalid Coordinates"
+      "Invalid coordinates. Letter entered does not exist on board."
     end
   end
 
@@ -136,7 +136,7 @@ class Validation
 
   def detect_duplicate_coordinate_with_error(split_coordinates)
     if detect_duplicate_coordinate(split_coordinates)
-      "Invalid Coordinates"
+      "Invalid coordinates due to duplication."
     end
   end
 

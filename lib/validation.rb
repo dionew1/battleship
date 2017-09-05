@@ -29,9 +29,21 @@ class Validation
     numbers.include?("1") && numbers.include?(columns.length.to_s)
   end
 
+  def detect_horizontal_wrap_with_error(split_coordinates, columns)
+    if detect_horizontal_wrap(split_coordinates, columns)
+      "Cannot wrap ship around board, please re-enter coordinates."
+    end
+  end
+
   def detect_vertical_wrap(split_coordinates, rows)
     letters = get_letters(split_coordinates)
     letters.include?("A") && letters.include?(rows.last)
+  end
+
+  def detect_vertical_wrap_with_error(split_coordinates, columns)
+    if detect_vertical_wrap(split_coordinates, columns)
+      "Cannot wrap ship around board, please re-enter coordinates."
+    end
   end
 
   def detect_invalid_coordinates_length(split_coordinates, ship_length)
@@ -127,5 +139,5 @@ class Validation
       "Invalid Coordinates"
     end
   end
-  
+
 end

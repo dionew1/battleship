@@ -102,6 +102,13 @@ class ValidationTest < Minitest::Test
     refute actual
   end
 
+  def test_detect_horizontal_wrap_with_error
+    validation = Validation.new
+    actual = validation.detect_horizontal_wrap_with_error(["A2", "A1", "A4"], [1, 2, 3, 4])
+
+    assert_equal "Cannot wrap ship around board, please re-enter coordinates.",actual
+  end
+
   def test_detect_vertical_wrap_with_2_coordinates
     validation = Validation.new
     actual = validation.detect_vertical_wrap(["A1", "D1"], ["A", "B", "C", "D"])
@@ -128,6 +135,13 @@ class ValidationTest < Minitest::Test
     actual = validation.detect_vertical_wrap(["A1", "C1", "B1"], ["A", "B", "C", "D"])
 
     refute actual
+  end
+
+  def test_detect_vertical_wrap_with_error
+    validation = Validation.new
+    actual = validation.detect_vertical_wrap_with_error(["A1", "C1", "D1"], ["A", "B", "C", "D"])
+
+    assert_equal "Cannot wrap ship around board, please re-enter coordinates.", actual
   end
 
   def test_detect_invalid_length_of_coordinates_with_2_coordinates

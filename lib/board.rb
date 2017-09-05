@@ -152,8 +152,23 @@ attr_accessor :ships
     current_grid += boarder
   end
 
-  def validate_human_coordinates
-
+  def validate_human_coordinates(coordinates)
+    split_coordinates = split_coordinates(coordinates)
+    direction = @validation.detect_direction(split_coordinates)
+    results = []
+    results << @validation.detect_number_does_not_exist_on_board_with_error(split_coordinates, @columns)
+    results << @validation.detect_letter_does_not_exist_on_board_with_error(split_coordinates, @rows)
+    results << @validation.detect_overlap_with_error(split_coordinates, @ships)
+    results << @validation.detect_duplicate_coordinate_with_error(split_coordinates)
+    results << @validation.detect_invalid_coordinates_length_with_error(split_coordinates, split_coordinates.length)
+    if direction == "horizontal"
+      results << @validation.detect_horizontal_wrap_with_error(split_coordinates,@columns)
+      results << @validation.detect_horizontal_split_with_error(split_coordinates)
+    else
+      results << @validation.detect_vertical_wrap_with_error(split_coordinates, @rows)
+      results << @validation.detect_vertical_split_with_error(split_coordinates, @rows)
+    end
+    results.compact.uniq.join("\n")
   end
 
 

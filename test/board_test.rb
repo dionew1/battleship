@@ -210,8 +210,33 @@ class BoardTest < Minitest::Test
   end
 
   def test_validate_human_coordinates
+    board = Board.new
+    actual = board.validate_human_coordinates("A1 A2")
 
-
+    assert_equal "", actual
   end
+
+  def test_validate_human_coordinates_wrap
+    board = Board.new
+    actual = board.validate_human_coordinates("A1 A4")
+
+    assert_equal "Cannot wrap ship around board, please re-enter coordinates.\nSplit coordinates, please re-enter valid coordinates.", actual
+  end
+
+  def test_validate_human_coordinates_split
+    board = Board.new
+    actual = board.validate_human_coordinates("A1 C1")
+
+    assert_equal "Split coordinates, please re-enter valid coordinates.", actual
+  end
+
+  def test_validate_human_coordinates_overlap
+    board = Board.new
+    board.ships << Ship.new(["A1", "A2"], "horizontal")
+    actual = board.validate_human_coordinates("A1 B2")
+
+    assert_equal "Two ships cannot reside in the same coordinate.", actual
+  end
+
 
 end

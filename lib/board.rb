@@ -12,6 +12,7 @@ attr_accessor :ships
     @columns = [1, 2, 3, 4]
     @ships = []
     @validation = Validation.new
+    @current_grid = ("=" * 14) + "\n" + ".  " + @columns.join("  ") + "\n"
   end
 
   def upcase_coordinates(coordinates)
@@ -129,27 +130,33 @@ attr_accessor :ships
     end
   end
 
+  def review_value_for_grid(value)
+    if value == nil
+      @current_grid += " "
+    elsif value == "M"
+      @current_grid += "M"
+    elsif value.hits.include?(coordinate)
+      @current_grid += "H"
+    end
+  end
+
+  def review_columns_for_display(row)
+    @columns.each do |column|
+      coordinate = row+column.to_s
+      value = @grid[coordinate]
+      review_value_for_grid(value)
+      @current_grid += "  "
+    end
+  end
+
   def display_grid
     boarder = "=" * 14
-    header = ".  " + @columns.join("  ")
-    current_grid = boarder + "\n" + header + "\n"
     @rows.each do |row|
-      current_grid += row + "  "
-      @columns.each do |column|
-        coordinate = row+column.to_s
-        value = @grid[coordinate]
-        if value == nil
-          current_grid += " "
-        elsif value == "M"
-          current_grid += "M"
-        elsif value.hits.include?(coordinate)
-          current_grid += "H"
-        end
-        current_grid += "  "
-      end
-      current_grid += "\n"
+      @current_grid += row + "  "
+      review_columns_for_display(row)
+      @current_grid += "\n"
     end
-    current_grid += boarder
+    @current_grid += boarder
   end
 
   def validate_human_coordinates(coordinates)

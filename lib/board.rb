@@ -112,12 +112,21 @@ attr_accessor :ships
     coordinates
   end
 
-  def create_computer_ship_one
-    ship_coordinates = create_computer_coordinates(2)
+  def create_computer_ship(ship_length)
+    ship_coordinates = create_computer_coordinates(ship_length)
     split_ship_coordinates = split_coordinates(ship_coordinates)
     direction = @validation.detect_direction(split_ship_coordinates)
-    @ships << Ship.new(split_ship_coordinates, direction)
+    ship = Ship.new(split_ship_coordinates, direction)
+    @ships << ship
+    ship
   end
 
+  def assign_ships_to_grid
+    @ships.each do |ship|
+      ship.location.each do |coordinate|
+        @grid[coordinate] = ship
+      end
+    end
+  end
 
 end

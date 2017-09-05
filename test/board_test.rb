@@ -160,9 +160,41 @@ class BoardTest < Minitest::Test
 
   def test_create_ship
     board = Board.new
-    board.create_computer_ship_one
+    board.create_computer_ship(2)
 
     assert_equal 1, board.ships.length
+  end
+
+  def test_create_ship_with_two
+    board = Board.new
+    board.create_computer_ship(2)
+    board.create_computer_ship(3)
+
+    assert_equal 2, board.ships.length
+  end
+
+  def test_ship_location_with_1_ship
+    board = Board.new
+    ship_1 = board.create_computer_ship(2)
+
+    assert_equal 2, ship_1.location.length
+  end
+
+  def test_ship_location_with_2_ships
+    board = Board.new
+    ship_1 = board.create_computer_ship(2)
+    ship_2 = board.create_computer_ship(3)
+
+    assert_equal 3, ship_2.location.length
+  end
+
+  def test_assign_ship_to_grid
+    board = Board.new
+    ship_1 = board.create_computer_ship(2)
+    ship_2 = board.create_computer_ship(3)
+    board.assign_ships_to_grid
+
+    assert_equal 5, board.grid.compact.length
   end
 
 

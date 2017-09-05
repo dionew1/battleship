@@ -56,8 +56,8 @@ attr_accessor :ships
     split_coordinates = split_coordinates(coordinates)
     direction = @validation.detect_direction(split_coordinates)
     results = []
-    results << @validation.detect_number_exists_on_board(split_coordinates, @columns)
-    results << @validation.detect_letter_exists_on_board(split_coordinates, @rows)
+    results << @validation.detect_number_does_not_exist_on_board(split_coordinates, @columns)
+    results << @validation.detect_letter_does_not_exist_on_board(split_coordinates, @rows)
     results << @validation.detect_overlap(split_coordinates, @ships)
     results << @validation.detect_duplicate_coordinate(split_coordinates)
     results << @validation.detect_invalid_coordinates_length(split_coordinates, split_coordinates.length)
@@ -128,5 +128,33 @@ attr_accessor :ships
       end
     end
   end
+
+  def display_grid
+    boarder = "=" * 14
+    header = ".  " + @columns.join("  ")
+    current_grid = boarder + "\n" + header + "\n"
+    @rows.each do |row|
+      current_grid += row + "  "
+      @columns.each do |column|
+        coordinate = row+column.to_s
+        value = @grid[coordinate]
+        if value == nil
+          current_grid += " "
+        elsif value == "M"
+          current_grid += "M"
+        elsif value.hits.include?(coordinate)
+          current_grid += "H"
+        end
+        current_grid += "  "
+      end
+      current_grid += "\n"
+    end
+    current_grid += boarder
+  end
+
+  def validate_human_coordinates
+
+  end
+
 
 end

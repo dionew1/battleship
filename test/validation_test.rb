@@ -151,6 +151,13 @@ class ValidationTest < Minitest::Test
     assert actual
   end
 
+  def test_detect_invalid_coordinates_length_with_error
+    validation = Validation.new
+    actual = validation.detect_invalid_coordinates_length_with_error(["A1", "A2", "A3", "A4"], 2)
+
+    assert_equal "Invalid Coordinates", actual
+  end
+
   def test_detect_horizontal_split_with_2_coordinates
     validation = Validation.new
     actual = validation.detect_horizontal_split(["A1", "A3"])
@@ -177,6 +184,13 @@ class ValidationTest < Minitest::Test
     actual = validation.detect_horizontal_split(["A1", "A3", "A2"])
 
     refute actual
+  end
+
+  def test_horizontal_split_with_error
+    validation = Validation.new
+    actual = validation.detect_horizontal_split_with_error(["A1", "A3", "A4"])
+
+    assert_equal "Split coordinates, please re-enter valid coordinates.", actual
   end
 
   def test_detect_vertical_split_with_2_coordinates
@@ -208,32 +222,53 @@ class ValidationTest < Minitest::Test
     refute actual
   end
 
-  def test_detect_number_exists
+  def test_detect_vertical_split_with_error
     validation = Validation.new
-    actual = validation.detect_number_exists_on_board(["A1", "A6"], [1, 2, 3, 4] )
+    actual = validation.detect_vertical_split_with_error(["A1", "C1", "D1"], ["A", "B", "C", "D"])
+
+    assert_equal   "Split coordinates, please re-enter valid coordinates.", actual
+  end
+
+  def test_detect_number_does_not_exist_on_board
+    validation = Validation.new
+    actual = validation.detect_number_does_not_exist_on_board(["A1", "A6"], [1, 2, 3, 4] )
+
+    assert actual
+  end
+
+  def test_detect_number_does_not_exist_on_board_with_valid_coordinates
+    validation = Validation.new
+    actual = validation.detect_number_does_not_exist_on_board(["A1", "A2"], [1, 2, 3, 4] )
 
     refute actual
   end
 
-  def test_detect_number_exists_with_valid_coordinates
+  def test_detect_number_does_not_exist_on_board_with_error
     validation = Validation.new
-    actual = validation.detect_number_exists_on_board(["A1", "A2"], [1, 2, 3, 4] )
+    actual = validation.detect_number_does_not_exist_on_board_with_error(["A1", "A6"], [1, 2, 3, 4] )
 
-    assert_nil actual
+    assert_equal "Invalid Coordinates", actual
   end
 
-  def test_detect_letter_exists
+  def test_detect_letter_does_not_exist_on_board
     validation = Validation.new
-    actual = validation.detect_letter_exists_on_board(["A1", "E4"], ["A", "B", "C", "D"])
+    actual = validation.detect_letter_does_not_exist_on_board(["A1", "E4"], ["A", "B", "C", "D"])
+
+    assert actual
+  end
+
+  def test_detect_letter_does_not_exist_on_board_with_valid_coordinates
+    validation = Validation.new
+    actual = validation.detect_letter_does_not_exist_on_board(["A1", "A2"], ["A", "B", "C", "D"] )
 
     refute actual
   end
 
-  def test_detect_letter_exists_with_valid_coordinates
+  def test_detect_letter_does_not_exist_on_board_with_error
     validation = Validation.new
-    actual = validation.detect_letter_exists_on_board(["A1", "A2"], ["A", "B", "C", "D"] )
+    actual = validation.detect_letter_does_not_exist_on_board_with_error(["A1", "E4"], ["A", "B", "C", "D"])
 
-    assert_nil actual
+    assert_equal "Invalid Coordinates", actual
   end
 
   def test_detect_overlap_with_one_ship
@@ -251,6 +286,14 @@ class ValidationTest < Minitest::Test
     refute actual
   end
 
+  def test_detect_overlap_with_one_ship_with_error
+    validation = Validation.new
+    ship = Ship.new(["A1", "A2"], "horizontal")
+    actual = validation.detect_overlap_with_error(["A1", "B1"], [ship])
+
+    assert_equal "Two ships cannot reside in the same coordinate.", actual
+  end
+
   def test_detect_duplicate_coordinate
     validation = Validation.new
     actual = validation.detect_duplicate_coordinate(["A1", "A1"])
@@ -263,6 +306,13 @@ class ValidationTest < Minitest::Test
     actual = validation.detect_duplicate_coordinate(["A1", "A2"])
 
     refute actual
+  end
+
+  def test_detect_duplicate_coordinate_with_error
+    validation = Validation.new
+    actual = validation.detect_duplicate_coordinate_with_error(["A1", "A1"])
+
+    assert_equal "Invalid Coordinates", actual
   end
 
 end

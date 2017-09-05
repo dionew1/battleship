@@ -8,5 +8,5 @@ class Timer
     total_time = Time.now- @begin_time
     "This game was played in #{total_time.ceil} seconds."
   end
-
+  
 end

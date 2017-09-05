@@ -197,5 +197,21 @@ class BoardTest < Minitest::Test
     assert_equal 5, board.grid.compact.length
   end
 
+  def test_display_grid
+    board = Board.new
+
+    assert_equal "==============" + "\n" +
+                 ".  1  2  3  4" + "\n" +
+                 "A              " + "\n" +
+                 "B              " + "\n" +
+                 "C              " + "\n" +
+                 "D              " + "\n" +
+                 "==============", board.display_grid
+  end
+
+  def test_validate_human_coordinates
+
+
+  end
 
 end

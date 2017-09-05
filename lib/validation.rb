@@ -38,6 +38,12 @@ class Validation
     split_coordinates.length != ship_length
   end
 
+  def detect_invalid_coordinates_length_with_error(split_coordinates, ship_length)
+    if detect_invalid_coordinates_length(split_coordinates, ship_length)
+      "Invalid Coordinates"
+    end
+  end
+
   def detect_horizontal_split(split_coordinates)
     sorted = split_coordinates.sort
     numbers = get_numbers(sorted)
@@ -46,6 +52,12 @@ class Validation
     end
     comparison = [*(integers[0]..integers[-1])]
     comparison != integers
+  end
+
+  def detect_horizontal_split_with_error(split_coordinates)
+    if detect_horizontal_split(split_coordinates)
+      "Split coordinates, please re-enter valid coordinates."
+    end
   end
 
   def detect_vertical_split(split_coordinates, rows)
@@ -59,21 +71,38 @@ class Validation
     comparison != indexes
   end
 
-  def detect_number_exists_on_board(split_coordinates, columns)
-    numbers = get_numbers(split_coordinates)
-    valid_numbers = numbers.map do |number|
-      columns.include?(number.to_i)
+  def detect_vertical_split_with_error(split_coordinates, rows)
+    if detect_vertical_split(split_coordinates, rows)
+      "Split coordinates, please re-enter valid coordinates."
     end
-      valid_numbers.find {|value| value == false}
   end
 
+  def detect_number_does_not_exist_on_board(split_coordinates, columns)
+    numbers = get_numbers(split_coordinates)
+    valid_numbers = numbers.map do |number|
+      !columns.include?(number.to_i)
+    end
+      valid_numbers.include?(true)
+  end
 
-  def detect_letter_exists_on_board(split_coordinates, rows)
+  def detect_number_does_not_exist_on_board_with_error(split_coordinates, columns)
+    if detect_number_does_not_exist_on_board(split_coordinates, columns)
+      "Invalid Coordinates"
+    end
+  end
+
+  def detect_letter_does_not_exist_on_board(split_coordinates, rows)
     letters = get_letters(split_coordinates)
     valid_letters = letters.map do |letter|
-      rows.include?(letter)
+      !rows.include?(letter)
     end
-      valid_letters.find {|value| value == false}
+      valid_letters.include?(true)
+  end
+
+  def detect_letter_does_not_exist_on_board_with_error(split_coordinates, rows)
+    if detect_letter_does_not_exist_on_board(split_coordinates, rows)
+      "Invalid Coordinates"
+    end
   end
 
   def detect_overlap(split_coordinates, ships)
@@ -83,8 +112,20 @@ class Validation
     overlap.flatten.include?(true)
   end
 
+  def detect_overlap_with_error(split_coordinates,ships)
+    if detect_overlap(split_coordinates, ships)
+      "Two ships cannot reside in the same coordinate."
+    end
+  end
+
   def detect_duplicate_coordinate(split_coordinates)
     split_coordinates.uniq != split_coordinates
   end
 
+  def detect_duplicate_coordinate_with_error(split_coordinates)
+    if detect_duplicate_coordinate(split_coordinates)
+      "Invalid Coordinates"
+    end
+  end
+  
 end

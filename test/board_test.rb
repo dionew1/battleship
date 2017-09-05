@@ -266,7 +266,33 @@ class BoardTest < Minitest::Test
     assert_equal "Two ships cannot reside in the same coordinate.", actual
   end
 
-  
+  def test_create_human_ship_1_ship
+    board = Board.new
+    actual = board.create_human_ship("A1 A2")
 
+    assert_equal 1, board.ships.length
+  end
+
+  def test_create_human_ship_2_ships
+    board = Board.new
+    board.ships << Ship.new(["A2", "A3"], "horizontal")
+    actual = board.create_human_ship("A1 B1 C1")
+
+    assert_equal 2, board.ships.length
+  end
+
+  def test_place_human_coordinates_on_board_valid_coordinates
+    board = Board.new
+    actual = board.place_human_ship_on_board("A1 A2")
+
+    assert_equal 1, board.ships.length
+  end
+
+  def test_place_human_coordinates_on_board
+    board = Board.new
+    actual = board.place_human_ship_on_board("A1 A3")
+
+    assert_equal 0, board.ships.length
+  end
 
 end

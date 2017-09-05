@@ -168,6 +168,7 @@ attr_accessor :ships
     results << @validation.detect_overlap_with_error(split_coordinates, @ships)
     results << @validation.detect_duplicate_coordinate_with_error(split_coordinates)
     results << @validation.detect_invalid_coordinates_length_with_error(split_coordinates, split_coordinates.length)
+    #does the split_coordinates_length check the length?
     if direction == "horizontal"
       results << @validation.detect_horizontal_wrap_with_error(split_coordinates,@columns)
       results << @validation.detect_horizontal_split_with_error(split_coordinates)
@@ -178,5 +179,20 @@ attr_accessor :ships
     results.compact.uniq.join("\n")
   end
 
+  def create_human_ship(coordinates)
+      split_ship_coordinates = split_coordinates(coordinates)
+      direction = @validation.detect_direction(split_ship_coordinates)
+      ship = Ship.new(split_ship_coordinates, direction)
+      @ships << ship
+      ship
+  end
+
+  def place_human_ship_on_board(coordinates)
+    if validate_human_coordinates(coordinates).length == 0
+      create_human_ship(coordinates)
+    else
+      validate_human_coordinates(coordinates)
+    end
+  end
 
 end

@@ -1,6 +1,6 @@
 class Board
 
-attr_reader :grid, :rows, :columns
+attr_reader :grid, :rows, :columns, :current_grid
 attr_accessor :ships
 
   def initialize
@@ -130,7 +130,7 @@ attr_accessor :ships
     end
   end
 
-  def review_value_for_grid(value)
+  def review_value_for_grid(value, coordinate)
     if value == nil
       @current_grid += " "
     elsif value == "M"
@@ -144,7 +144,7 @@ attr_accessor :ships
     @columns.each do |column|
       coordinate = row+column.to_s
       value = @grid[coordinate]
-      review_value_for_grid(value)
+      review_value_for_grid(value, coordinate)
       @current_grid += "  "
     end
   end

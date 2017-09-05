@@ -48,8 +48,8 @@ end
 if __FILE__ == $PROGRAM_NAME
 battleship = Battleship.new
 battleship.welcome_message
-loop do
-  puts battleship.display
-  battleship.get_response
-end
+  loop do
+    puts battleship.display
+    battleship.get_response
+  end
 end

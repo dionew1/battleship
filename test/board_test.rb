@@ -199,6 +199,32 @@ class BoardTest < Minitest::Test
     assert_equal 5, board.grid.compact.length
   end
 
+  def test_review_value_for_grid_return_nil
+    board = Board.new
+    value = nil
+    actual = board.review_value_for_grid(value, "A1")
+
+    assert_equal board.current_grid, actual
+  end
+
+  def test_review_value_for_grid_return_M
+    board = Board.new
+    value = "M"
+    actual = board.review_value_for_grid(value, "A1")
+
+    assert_equal board.current_grid, actual
+  end
+
+  def test_review_value_for_grid_return_H
+    board = Board.new
+    ship = Ship.new(["A1", "A2"], "horizontal")
+    ship.hits << "A1"
+    value = ship
+    actual = board.review_value_for_grid(value, "A1")
+
+    assert_equal board.current_grid, actual
+  end
+
   def test_display_grid
     board = Board.new
 

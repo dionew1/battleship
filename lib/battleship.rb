@@ -35,10 +35,10 @@ attr_reader :display
       "After the ships are placed, each will take turns to fire one shot."+ "\n" +
       "The shots are recorded as hit(H) or miss(M)." + "\n" +
       "First player to sink all the other players ships wins!"
-    elsif @response == ""
-      welcome_message
     elsif @response == "q" || @response == "quit"
       exit
+    else
+      welcome_message
     end
   end
 

@@ -221,6 +221,17 @@ attr_accessor :ships
     @grid[coordinate] = "M"
   end
 
-  
+  def record_shot(coordinate)
+    if hit?(coordinate)
+      add_hit_to_ship(coordinate, @grid[coordinate])
+    else
+      add_miss_to_grid(coordinate)
+    end
+  end
+
+  def sunk_all?
+    sunken = @ships.find_all { |ship| ship.sunk? }
+    sunken.length == @ships.length
+  end
 
 end

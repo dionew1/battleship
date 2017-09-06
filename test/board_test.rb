@@ -357,8 +357,47 @@ class BoardTest < Minitest::Test
     board = Board.new
     actual = board.add_miss_to_grid("C3")
     expected = board.grid["C3"]
-    
+
     assert_equal expected, actual
+  end
+
+  def test_record_shot_miss
+    board = Board.new
+    board.record_shot("A2")
+
+    assert_equal "M", board.grid["A2"]
+  end
+
+  def test_record_shot_hit
+    board = Board.new
+    board.create_valid_human_ship("A2 B2 C2", 3)
+    board.assign_ships_to_grid
+    board.record_shot("C2")
+
+    assert_equal "C2", board.grid["C2"].hits.first
+  end
+
+  def test_false_sunk_all?
+    board = Board.new
+    board.create_valid_human_ship("A2 B2 C2", 3)
+    board.create_valid_human_ship("D3 D4", 2)
+    board.assign_ships_to_grid
+
+    refute board.sunk_all?
+  end
+
+  def test_false_sunk_all?
+    board = Board.new
+    board.create_valid_human_ship("A2 B2 C2", 3)
+    board.create_valid_human_ship("D3 D4", 2)
+    board.assign_ships_to_grid
+    board.record_shot("A2")
+    board.record_shot("B2")
+    board.record_shot("C2")
+    board.record_shot("D3")
+    board.record_shot("D4")
+
+    assert board.sunk_all?
   end
 
 end

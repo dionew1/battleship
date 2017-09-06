@@ -209,4 +209,18 @@ attr_accessor :ships
     end
   end
 
+  def hit?(coordinate)
+    @grid[coordinate].instance_of? Ship
+  end
+
+  def add_hit_to_ship(coordinate, ship)
+    ship.hits << coordinate
+  end
+
+  def add_miss_to_grid (coordinate)
+    @grid[coordinate] = "M"
+  end
+
+  
+
 end

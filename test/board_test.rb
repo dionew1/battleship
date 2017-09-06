@@ -327,4 +327,38 @@ class BoardTest < Minitest::Test
     assert_equal "Coordinate already fired upon.", actual
   end
 
+  def test_hit?
+    board = Board.new
+    actual = board.hit?("A2")
+
+    refute actual
+  end
+
+  def test_false_hit?
+    board = Board.new
+    board.create_valid_human_ship("A2 B2 C2", 3)
+    board.assign_ships_to_grid
+    actual = board.hit?("B2")
+
+    assert actual
+  end
+
+  def test_add_hit_to_ship
+    board = Board.new
+    board.create_valid_human_ship("A2 B2 C2", 3)
+    board.assign_ships_to_grid
+    actual = board.add_hit_to_ship("B2", board.ships.first)
+    expected = ["B2"]
+
+    assert_equal expected, actual
+  end
+
+  def test_add_miss_to_grid
+    board = Board.new
+    actual = board.add_miss_to_grid("C3")
+    expected = board.grid["C3"]
+    
+    assert_equal expected, actual
+  end
+
 end

@@ -239,21 +239,21 @@ class BoardTest < Minitest::Test
 
   def test_validate_human_coordinates
     board = Board.new
-    actual = board.validate_human_coordinates("A1 A2")
+    actual = board.validate_human_coordinates("A1 A2", 2)
 
     assert_equal "", actual
   end
 
   def test_validate_human_coordinates_wrap
     board = Board.new
-    actual = board.validate_human_coordinates("A1 A4")
+    actual = board.validate_human_coordinates("A1 A4", 2)
 
     assert_equal "Cannot wrap ship around board, please re-enter coordinates.\nSplit coordinates, please re-enter valid coordinates.", actual
   end
 
   def test_validate_human_coordinates_split
     board = Board.new
-    actual = board.validate_human_coordinates("A1 C1")
+    actual = board.validate_human_coordinates("A1 C1", 2)
 
     assert_equal "Split coordinates, please re-enter valid coordinates.", actual
   end
@@ -261,7 +261,7 @@ class BoardTest < Minitest::Test
   def test_validate_human_coordinates_overlap
     board = Board.new
     board.ships << Ship.new(["A1", "A2"], "horizontal")
-    actual = board.validate_human_coordinates("A1 B2")
+    actual = board.validate_human_coordinates("A1 B2", 2)
 
     assert_equal "Two ships cannot reside in the same coordinate.", actual
   end
@@ -283,14 +283,14 @@ class BoardTest < Minitest::Test
 
   def test_create_valid_human_ship_with_valid_coordinates
     board = Board.new
-    actual = board.create_valid_human_ship("A1 A2")
+    actual = board.create_valid_human_ship("A1 A2", 2)
 
     assert_equal 1, board.ships.length
   end
 
   def test_create_valid_human_ship
     board = Board.new
-    actual = board.create_valid_human_ship("A1 A3")
+    actual = board.create_valid_human_ship("A1 A3", 2)
 
     assert_equal 0, board.ships.length
   end
@@ -310,6 +310,21 @@ class BoardTest < Minitest::Test
              "D1", "D2", "D3",])
 
     assert_equal "D4", actual
+  end
+
+  def test_validate_player_shot
+    board = Board.new
+    shots = []
+    actual = board.validate_player_shot("A3", shots)
+
+    assert_equal 1, shots.length
+  end
+
+  def test_validate_player_shot
+    board = Board.new
+    actual = board.validate_player_shot("A3", ["A3"])
+
+    assert_equal "Coordinate already fired upon.", actual
   end
 
 end

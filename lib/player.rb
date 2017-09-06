@@ -1,7 +1,7 @@
 class Player
 
   def initialize
-    @shot_count = 0
+    @shots = []
     @board = Board.new
   end
 

@@ -187,12 +187,17 @@ attr_accessor :ships
       ship
   end
 
-  def place_human_ship_on_board(coordinates)
+  def create_valid_human_ship(coordinates)
     if validate_human_coordinates(coordinates).length == 0
       create_human_ship(coordinates)
     else
       validate_human_coordinates(coordinates)
     end
+  end
+
+  def select_computer_shot(shots)
+    potential_shots = @grid.keys - shots
+    potential_shots[rand(potential_shots.length)]
   end
 
 end

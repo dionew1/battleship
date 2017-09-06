@@ -281,18 +281,35 @@ class BoardTest < Minitest::Test
     assert_equal 2, board.ships.length
   end
 
-  def test_place_human_coordinates_on_board_valid_coordinates
+  def test_create_valid_human_ship_with_valid_coordinates
     board = Board.new
-    actual = board.place_human_ship_on_board("A1 A2")
+    actual = board.create_valid_human_ship("A1 A2")
 
     assert_equal 1, board.ships.length
   end
 
-  def test_place_human_coordinates_on_board
+  def test_create_valid_human_ship
     board = Board.new
-    actual = board.place_human_ship_on_board("A1 A3")
+    actual = board.create_valid_human_ship("A1 A3")
 
     assert_equal 0, board.ships.length
+  end
+
+  def test_select_computer_shot
+    board = Board.new
+    actual = board.select_computer_shot([])
+
+    assert_equal 2, actual.length
+  end
+
+  def test_select_computer_shot
+    board = Board.new
+    actual = board.select_computer_shot(["A1", "A2", "A3", "A4",
+             "B1", "B2", "B3", "B4",
+             "C1", "C2", "C3", "C4",
+             "D1", "D2", "D3",])
+
+    assert_equal "D4", actual
   end
 
 end

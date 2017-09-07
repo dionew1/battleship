@@ -146,7 +146,7 @@ attr_accessor :ships
 
   def review_columns_for_display(row)
     @columns.each do |column|
-      coordinate = row+column.to_s
+      coordinate = row + column.to_s
       value = @grid[coordinate]
       review_value_for_grid(value, coordinate)
       @current_grid += "  "
@@ -248,20 +248,28 @@ attr_accessor :ships
     assign_ships_to_grid
   end
 
+  def sunk_message(unit)
+    if unit.sunk?
+      "You have sunk the #{unit.location.length} unit ship!" + "\n" +"Send lifeboats!"
+    else
+      "You have hit an enemy ship!"
+    end
+  end
+
+  def unit_instance_of(unit)
+    if unit.instance_of?(Ship)
+      sunk_message(unit)
+    else
+      ".........Miss"
+    end
+  end
+
   def fire_human_shot(coordinate, shots)
     message = validate_player_shot(coordinate, shots)
     unit = @grid[coordinate]
     if message == "Valid Shot"
       record_shot(coordinate)
-      if unit.instance_of?(Ship)
-        if unit.sunk?
-          "You have sunk the #{unit.location.length} unit ship!" + "\n" +"Send lifeboats!"
-        else
-          "You have hit an enemy ship!"
-        end
-      else
-        ".........Miss"
-      end
+      unit_instance_of(unit)
     else
       message
     end

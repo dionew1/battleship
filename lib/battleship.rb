@@ -59,53 +59,77 @@ attr_reader :display
     end
   end
 
+  def build_human_ship_placement_display(errors)
+    if errors.length != 0
+      @display = errors + "\n" + "Please re-enter coordinates for two-unit ship."
+    elsif @human.board.ships.count == 1
+      @display = "Please enter coordinates for three-unit ship."
+    elsif @human.board.ships.count == 2
+      @human.board.assign_ships_to_grid
+      @display = @computer.board.display_grid + "\n" + "Enter coordinates to fire:"
+      @human_set_up = false
+    end
+  end
+
   def human_ship_placement
     if @human.board.ships.count < 2
       errors = @human.board.create_valid_human_ship(@response, (@human.board.ships.count + 2))
-      if errors.length != 0
-        @display = errors + "\n" + "Please re-enter coordinates for two-unit ship."
-      elsif @human.board.ships.count == 1
-        @display = "Please enter coordinates for three-unit ship."
-      elsif @human.board.ships.count == 2
-        @display = @computer.board.display_grid + "\n" + "Enter coordinates to fire:"
-        @human_set_up = false
-      end
+      build_human_ship_placement_display(errors)
+    end
+  end
+
+  def end_human_turn(shots_taken)
+    if shots_taken != @human.shots.length
+      @display += "\n" + "Press enter to end turn:"
+      @human_turn = false
+    end
+  end
+
+  def shot_turns
+    if @human_turn
+      shots_taken = @human.shots.length
+      @display = "\n" + @computer.board.fire_human_shot(@response, @human.shots)+ "\n\n" +
+      @computer.board.display_grid
+      end_human_turn(shots_taken)
+    else
+      results = @human.board.fire_computer_shot(@computer.shots)
+      @display = @human.board.display_grid + "\n\n\n" + results
+      @human_turn = true
+      @display += "\n\n" + @computer.board.display_grid
+      @display += "\n\n Enter coordinates to fire:"
     end
   end
 
   def battle_ships
     @response = @response.upcase
     if !@computer.board.sunk_all? && !@human.board.sunk_all?
-      if @human_turn
-        shots_taken = @human.shots.length
-        @display = "\n" + @computer.board.fire_human_shot(@response, @human.shots)+ "\n\n" +
-        @computer.board.display_grid
-        if shots_taken != @human.shots.length
-          @display += "\n" + "Press enter to end turn:"
-          @human_turn = false
-        end
-      else
-        results = @human.board.fire_computer_shot(@computer.shots)
-        @display = @human.board.display_grid + "\n\n\n" + results
-        @human_turn = true
-        @display += "\n\n" + @computer.board.display_grid
-        @display += "\n\n Enter coordinates to fire:"
-      end
+      shot_turns
     else
       @battle = false
     end
   end
 
+  def reset_game
+    @response = ""
+    @initial_menu = true
+    @human_set_up = true
+    @battle = true
+    @computer = Player.new
+    @human = Player.new
+    @begin_time = nil
+    @human_turn = true
+  end
+
   def end_game
     if @human.board.sunk_all?
       @display = "Sorry, you lost."
-      @display += "\n" + @computer.shots.count.to_s
+      @display += "\n" + "The winner fired #{@computer.shots.count.to_s} total shots!"
     else
       @display = "Congratulations! You sunk the ships!"
-      @display += "\n" + @human.shots.count.to_s
+      @display += "\n" + "The winner fired #{@human.shots.count.to_s} total shots!"
     end
     @display += "\n" + @begin_time.time_of_game
-    exit
+    reset_game
   end
 
 end

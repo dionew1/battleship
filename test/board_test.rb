@@ -307,7 +307,7 @@ class BoardTest < Minitest::Test
     actual = board.select_computer_shot(["A1", "A2", "A3", "A4",
              "B1", "B2", "B3", "B4",
              "C1", "C2", "C3", "C4",
-             "D1", "D2", "D3",])
+             "D1", "D2", "D3"])
 
     assert_equal "D4", actual
   end
@@ -325,6 +325,13 @@ class BoardTest < Minitest::Test
     actual = board.validate_player_shot("A3", ["A3"])
 
     assert_equal "Coordinate already fired upon.", actual
+  end
+
+  def test_validate_player_shot_invalid_coordinate
+    board = Board.new
+    actual = board.validate_player_shot("Z3", ["A3"])
+
+    assert_equal "Invalid Coordinate", actual
   end
 
   def test_hit?
@@ -399,5 +406,71 @@ class BoardTest < Minitest::Test
 
     assert board.sunk_all?
   end
+
+  def test_place_computer_ships
+    board = Board.new
+    board.place_computer_ships
+
+    assert_equal 2, board.ships.count
+    assert_equal 5, board.grid.compact.count
+  end
+
+  def test_sunk_message_sunk_ship
+    board = Board.new
+    ship = Ship.new(["A1", "A2"], "horizontal")
+    ship.hits = ["A1", "A2"]
+    actual = board.sunk_message(ship)
+    expected = "You have sunk the #{ship.location.length} unit ship!" + "\n" +"Send lifeboats!"
+    assert_equal expected, actual
+  end
+
+
+  def test_sunk_message_hit_ship
+    board = Board.new
+    ship = Ship.new(["A1", "A2"], "horizontal")
+    ship.hits = ["A1"]
+    actual = board.sunk_message(ship)
+
+    assert_equal "You have hit an enemy ship!", actual
+  end
+
+  def test_unit_instance_of
+    board = Board.new
+    unit = board.grid["A1"]
+    actual = board.unit_instance_of(unit)
+
+    assert_equal ".........Miss", actual
+  end
+
+  def test_fire_human_shot
+    board = Board.new
+    shots = ["A1"]
+    actual = board.fire_human_shot("A1", shots)
+
+    assert_equal "Coordinate already fired upon.", actual
+  end
+
+  def test_fire_computer_shot_miss
+    board = Board.new
+    shots = []
+    actual = board.fire_computer_shot(shots)
+
+    assert_equal "........Miss at #{shots.last}", actual
+  end
+
+  def test_fire_computer_shot_ship_hit
+    board = Board.new
+    ship = Ship.new(["D3", "D4"], "horizontal")
+    board.ships << ship
+    board.assign_ships_to_grid
+    shots = ["A1", "A2", "A3", "A4",
+             "B1", "B2", "B3", "B4",
+             "C1", "C2", "C3", "C4",
+             "D1", "D2", "D3"]
+    actual = board.fire_computer_shot(shots)
+
+    assert_equal "You're ship has been hit at #{shots.last}", actual
+  end
+
 
 end

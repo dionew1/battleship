@@ -210,6 +210,7 @@ attr_accessor :ships
       "Coordinate already fired upon."
     else
       shots << coordinate
+      "Valid Shot"
     end
   end
 
@@ -244,6 +245,23 @@ attr_accessor :ships
     assign_ships_to_grid
   end
 
-
+  def fire_human_shot(coordinate, shots)
+    message = validate_player_shot(coordinate, shots)
+    unit = @grid[coordinate]
+    if message == "Valid Shot"
+      record_shot(coordinate)
+      if unit.instance_of?(Ship)
+        if unit.sunk?
+          "You have sunk the #{unit.location.length} unit ship!"
+        else
+          "You have hit an enemy ship!"
+        end
+      else
+        ".........Miss"
+      end
+    else
+      message
+    end
+  end
 
 end

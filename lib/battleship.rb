@@ -9,6 +9,8 @@ attr_reader :display
     @display = ""
     @response = ""
     @initial_menu = true
+    @human_set_up = true
+    @battle = true
     @computer = Player.new
     @human = Player.new
     @begin_time = nil
@@ -23,8 +25,10 @@ attr_reader :display
     @response = gets.chomp
     if @initial_menu
       response_to_welcome
-    else
-      game_play
+    elsif @human_set_up
+      human_ship_placement
+    elsif @battle
+      battle_ships
     end
   end
 
@@ -52,14 +56,24 @@ attr_reader :display
     end
   end
 
-  def game_play
+  def human_ship_placement
     if @human.board.ships.count < 2
       errors = @human.board.create_valid_human_ship(@response, (@human.board.ships.count + 2))
       if errors.length != 0
         @display = errors + "\n" + "Please re-enter coordinates for two-unit ship."
       elsif @human.board.ships.count == 1
         @display = "Please enter coordinates for three-unit ship."
+      elsif @human.board.ships.count == 2
+        @display = @computer.board.display_grid + "\n" + "Enter coordinates to fire:"
+        @human_set_up = false
       end
+    end
+  end
+
+  def battle_ships
+    @response = @response.upcase
+    if !@computer.board.sunk_all? && !@human.board.sunk_all?
+      @display = @computer.board.fire_human_shot(@response, @human.shots)
     end
   end
 

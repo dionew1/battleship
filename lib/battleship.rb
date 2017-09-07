@@ -85,8 +85,8 @@ attr_reader :display
           @human_turn = false
         end
       else
-        @display = @human.board.fire_computer_shot(@computer.shots) + "\n\n\n" +
-        @human.board.display_grid
+        results = @human.board.fire_computer_shot(@computer.shots)
+        @display = @human.board.display_grid + "\n\n\n" + results
         @human_turn = true
         @display += "\n\n" + @computer.board.display_grid
         @display += "\n\n Enter coordinates to fire:"
@@ -99,9 +99,13 @@ attr_reader :display
   def end_game
     if @human.board.sunk_all?
       @display = "Sorry, you lost."
+      @display += "\n" + @computer.shots.count.to_s
     else
       @display = "Congratulations! You sunk the ships!"
+      @display += "\n" + @human.shots.count.to_s
     end
+    @display += "\n" + @begin_time.time_of_game
+    exit
   end
 
 end

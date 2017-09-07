@@ -171,7 +171,7 @@ class ValidationTest < Minitest::Test
     validation = Validation.new
     actual = validation.detect_invalid_coordinates_length_with_error(["A1", "A2", "A3", "A4"], 2)
 
-    assert_equal "Invalid coordinates. Too many coordinates have been entered.", actual
+    assert_equal "Invalid coordinates.", actual
   end
 
   def test_detect_horizontal_split_with_2_coordinates

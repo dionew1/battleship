@@ -52,7 +52,7 @@ class Validation
 
   def detect_invalid_coordinates_length_with_error(split_coordinates, ship_length)
     if detect_invalid_coordinates_length(split_coordinates, ship_length)
-      "Invalid coordinates. Too many coordinates have been entered."
+      "Invalid coordinates."
     end
   end
 

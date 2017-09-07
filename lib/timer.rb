@@ -5,8 +5,8 @@ class Timer
   end
 
   def time_of_game
-    total_time = Time.now- @begin_time
-    "This game was played in #{total_time.ceil} seconds."
+    total_time = Time.now - @begin_time
+    "This game was played in #{total_time.ceil.to_s} seconds."
   end
-  
+
 end

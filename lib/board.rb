@@ -204,10 +204,12 @@ attr_accessor :ships
   end
 
   def validate_player_shot(coordinate, shots)
-    number_exists = @validation.detect_number_does_not_exist_on_board([*coordinate], columns)
-    letter_exists = @validation.detect_letter_does_not_exist_on_board([*coordinate], rows)
-    if shots.include?(coordinate) && !number_exists && !letter_exists
+    number_not_exists = @validation.detect_number_does_not_exist_on_board([*coordinate], columns)
+    letter_not_exists = @validation.detect_letter_does_not_exist_on_board([*coordinate], rows)
+    if shots.include?(coordinate)
       "Coordinate already fired upon."
+    elsif number_not_exists || letter_not_exists
+      "Invalid Coordinate"
     else
       shots << coordinate
       "Valid Shot"
@@ -252,7 +254,7 @@ attr_accessor :ships
       record_shot(coordinate)
       if unit.instance_of?(Ship)
         if unit.sunk?
-          "You have sunk the #{unit.location.length} unit ship!"
+          "You have sunk the #{unit.location.length} unit ship!" + "\n" +"Send lifeboats!"
         else
           "You have hit an enemy ship!"
         end

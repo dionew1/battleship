@@ -1,3 +1,6 @@
+require './lib/player'
+require './lib/timer'
+
 class Battleship
 
 attr_reader :display
@@ -6,6 +9,9 @@ attr_reader :display
     @display = ""
     @response = ""
     @initial_menu = true
+    @computer = Player.new
+    @human = Player.new
+    @begin_time = nil
   end
 
   def welcome_message
@@ -17,12 +23,16 @@ attr_reader :display
     @response = gets.chomp
     if @initial_menu
       response_to_welcome
+    else
+      game_play
     end
   end
 
   def response_to_welcome
     if @response == "p" || @response == "play"
-      @intial_menu = false
+      @begin_time = Timer.new
+      @computer.board.place_computer_ships
+      @initial_menu = false
       @display = "I have laid out my ships on the grid." + "\n" +
       "You now need to layout your two ships." + "\n" +
       "The first is two units long and the" + "\n" +
@@ -39,6 +49,17 @@ attr_reader :display
       exit
     else
       welcome_message
+    end
+  end
+
+  def game_play
+    if @human.board.ships.count < 2
+      errors = @human.board.create_valid_human_ship(@response, (@human.board.ships.count + 2))
+      if errors.length != 0
+        @display = errors + "\n" + "Please re-enter coordinates for two-unit ship."
+      elsif @human.board.ships.count == 1
+        @display = "Please enter coordinates for three-unit ship."
+      end
     end
   end
 

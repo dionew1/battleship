@@ -108,7 +108,7 @@ class ValidationTest < Minitest::Test
     validation = Validation.new
     actual = validation.detect_horizontal_wrap_with_error(["A2", "A1", "A4"], [1, 2, 3, 4])
 
-    assert_equal "Cannot wrap ship around board, please re-enter coordinates.",actual
+    assert_equal "Cannot wrap ship around board.",actual
   end
 
   def test_detect_vertical_wrap_with_2_coordinates
@@ -143,7 +143,7 @@ class ValidationTest < Minitest::Test
     validation = Validation.new
     actual = validation.detect_vertical_wrap_with_error(["A1", "C1", "D1"], ["A", "B", "C", "D"])
 
-    assert_equal "Cannot wrap ship around board, please re-enter coordinates.", actual
+    assert_equal "Cannot wrap ship around board.", actual
   end
 
   def test_detect_invalid_length_of_coordinates_with_2_coordinates
@@ -206,7 +206,7 @@ class ValidationTest < Minitest::Test
     validation = Validation.new
     actual = validation.detect_horizontal_split_with_error(["A1", "A3", "A4"])
 
-    assert_equal "Split coordinates, please re-enter valid coordinates.", actual
+    assert_equal "Split coordinates.", actual
   end
 
   def test_detect_vertical_split_with_2_coordinates
@@ -242,7 +242,7 @@ class ValidationTest < Minitest::Test
     validation = Validation.new
     actual = validation.detect_vertical_split_with_error(["A1", "C1", "D1"], ["A", "B", "C", "D"])
 
-    assert_equal   "Split coordinates, please re-enter valid coordinates.", actual
+    assert_equal   "Split coordinates.", actual
   end
 
   def test_detect_number_does_not_exist_on_board

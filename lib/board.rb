@@ -1,3 +1,6 @@
+require './lib/ship'
+require './lib/validation'
+
 class Board
 
 attr_reader :grid, :rows, :columns, :current_grid
@@ -20,7 +23,8 @@ attr_accessor :ships
   end
 
   def split_coordinates(coordinates)
-    coordinates.split
+    coordinates_capitals = upcase_coordinates(coordinates)
+    coordinates_capitals.split
   end
 
   def choose_random_ship_direction
@@ -187,11 +191,11 @@ attr_accessor :ships
   end
 
   def create_valid_human_ship(coordinates, ship_length)
-    if validate_human_coordinates(coordinates, ship_length).length == 0
+    errors = validate_human_coordinates(coordinates, ship_length)
+    if errors.length == 0
       create_human_ship(coordinates)
-    else
-      validate_human_coordinates(coordinates, ship_length)
     end
+    errors
   end
 
   def select_computer_shot(shots)
@@ -233,5 +237,13 @@ attr_accessor :ships
     sunken = @ships.find_all { |ship| ship.sunk? }
     sunken.length == @ships.length
   end
+
+  def place_computer_ships
+    create_computer_ship(2)
+    create_computer_ship(3)
+    assign_ships_to_grid
+  end
+
+
 
 end

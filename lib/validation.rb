@@ -31,7 +31,7 @@ class Validation
 
   def detect_horizontal_wrap_with_error(split_coordinates, columns)
     if detect_horizontal_wrap(split_coordinates, columns)
-      "Cannot wrap ship around board, please re-enter coordinates."
+      "Cannot wrap ship around board."
     end
   end
 
@@ -42,7 +42,7 @@ class Validation
 
   def detect_vertical_wrap_with_error(split_coordinates, columns)
     if detect_vertical_wrap(split_coordinates, columns)
-      "Cannot wrap ship around board, please re-enter coordinates."
+      "Cannot wrap ship around board."
     end
   end
 
@@ -68,7 +68,7 @@ class Validation
 
   def detect_horizontal_split_with_error(split_coordinates)
     if detect_horizontal_split(split_coordinates)
-      "Split coordinates, please re-enter valid coordinates."
+      "Split coordinates."
     end
   end
 
@@ -85,7 +85,7 @@ class Validation
 
   def detect_vertical_split_with_error(split_coordinates, rows)
     if detect_vertical_split(split_coordinates, rows)
-      "Split coordinates, please re-enter valid coordinates."
+      "Split coordinates."
     end
   end
 

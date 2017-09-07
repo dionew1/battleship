@@ -248,14 +248,14 @@ class BoardTest < Minitest::Test
     board = Board.new
     actual = board.validate_human_coordinates("A1 A4", 2)
 
-    assert_equal "Cannot wrap ship around board, please re-enter coordinates.\nSplit coordinates, please re-enter valid coordinates.", actual
+    assert_equal "Cannot wrap ship around board.\nSplit coordinates.", actual
   end
 
   def test_validate_human_coordinates_split
     board = Board.new
     actual = board.validate_human_coordinates("A1 C1", 2)
 
-    assert_equal "Split coordinates, please re-enter valid coordinates.", actual
+    assert_equal "Split coordinates.", actual
   end
 
   def test_validate_human_coordinates_overlap

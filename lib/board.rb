@@ -15,7 +15,7 @@ attr_accessor :ships
     @columns = [1, 2, 3, 4]
     @ships = []
     @validation = Validation.new
-    @current_grid = ("=" * 14) + "\n" + ".  " + @columns.join("  ") + "\n"
+    @current_grid = ""
   end
 
   def upcase_coordinates(coordinates)
@@ -154,6 +154,7 @@ attr_accessor :ships
   end
 
   def display_grid
+    @current_grid = ("=" * 14) + "\n" + ".  " + @columns.join("  ") + "\n"
     boarder = "=" * 14
     @rows.each do |row|
       @current_grid += row + "  "
@@ -263,6 +264,18 @@ attr_accessor :ships
       end
     else
       message
+    end
+  end
+
+  def fire_computer_shot(shots)
+    selection = select_computer_shot(shots)
+    validate_player_shot(selection, shots)
+    record_shot(selection)
+    unit = @grid[shots.last]
+    if unit.instance_of?(Ship)
+      "You're ship has been hit at #{shots.last}"
+    else
+      "........Miss at #{shots.last}"
     end
   end
 

@@ -14,6 +14,7 @@ attr_reader :display
     @computer = Player.new
     @human = Player.new
     @begin_time = nil
+    @human_turn = true
   end
 
   def welcome_message
@@ -29,6 +30,8 @@ attr_reader :display
       human_ship_placement
     elsif @battle
       battle_ships
+    else
+      end_game
     end
   end
 
@@ -73,10 +76,33 @@ attr_reader :display
   def battle_ships
     @response = @response.upcase
     if !@computer.board.sunk_all? && !@human.board.sunk_all?
-      @display = @computer.board.fire_human_shot(@response, @human.shots)
+      if @human_turn
+        shots_taken = @human.shots.length
+        @display = "\n" + @computer.board.fire_human_shot(@response, @human.shots)+ "\n\n" +
+        @computer.board.display_grid
+        if shots_taken != @human.shots.length
+          @display += "\n" + "Press enter to end turn:"
+          @human_turn = false
+        end
+      else
+        @display = @human.board.fire_computer_shot(@computer.shots) + "\n\n\n" +
+        @human.board.display_grid
+        @human_turn = true
+        @display += "\n\n" + @computer.board.display_grid
+        @display += "\n\n Enter coordinates to fire:"
+      end
+    else
+      @battle = false
     end
   end
 
+  def end_game
+    if @human.board.sunk_all?
+      @display = "Sorry, you lost."
+    else
+      @display = "Congratulations! You sunk the ships!"
+    end
+  end
 
 end
 
